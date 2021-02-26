@@ -65,8 +65,6 @@ cidades = {
 arruma_cidades_dict(cidades)
 entrada_saida = gera_entrada_saida_dict(cidades)
 
-# with ThreadPoolExecutor(max_workers=2) as executor:
-#     executor.map(raspa_cidade, cidades.items())
 for par in cidades.items():
     raspa_cidade(par)
 

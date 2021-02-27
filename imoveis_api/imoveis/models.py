@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class Estado(models.Model):
-    sigla = models.CharField(max_length=2)
+    sigla = models.CharField(max_length=2, unique=True)
 
 
     def __str__(self):

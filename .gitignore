@@ -1,3 +1,4 @@
 *.json
 *.sqlite3
 __pycache__/
+geckodriver

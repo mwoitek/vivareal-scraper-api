@@ -1,13 +1,23 @@
+import pathlib
 from json import dumps
 from time import sleep
 from selenium import webdriver
+from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.firefox.options import FirefoxProfile, Options
 from scraper.converte_inteiro import converte_inteiro
 
 
 FF_PROF_DIR = '/home/woitek/.mozilla/firefox/4sqh9j98.Selenium'
-FF_EXE_PATH = '/home/woitek/scripts_web_scraping/selenium/geckodriver'
+FF_EXE_PATH = str(pathlib.Path(__file__).parent / 'geckodriver')
+
+
+def pega_firefox_profile(profile_directory):
+    p = pathlib.Path(profile_directory)
+
+    if p.exists() and p.is_dir():
+        return FirefoxProfile(profile_directory=profile_directory)
+    return None
 
 
 class Imovel():
@@ -133,7 +143,7 @@ class ImoveisScraper(webdriver.Firefox):
         ff_opts.headless = headless
 
         super().__init__(
-            firefox_profile=FirefoxProfile(profile_directory=FF_PROF_DIR),
+            firefox_profile=pega_firefox_profile(FF_PROF_DIR),
             executable_path=FF_EXE_PATH,
             firefox_options=ff_opts
         )
@@ -154,7 +164,16 @@ class ImoveisScraper(webdriver.Firefox):
 
 
     def vai_para_proxima(self):
-        self.find_element_by_partial_link_text('Próxima').click()
+        proxima = self.find_element_by_partial_link_text('Próxima')
+        clicou = False
+
+        while not clicou:
+            try:
+                proxima.click()
+                clicou = True
+            except ElementClickInterceptedException:
+                self.execute_script('window.scrollBy(0, 50)')
+
         sleep(self.espera)
 
 

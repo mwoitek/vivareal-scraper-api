@@ -4,14 +4,16 @@ SCRIPT=$(realpath $0)
 PASTA_SCRIPT=$(dirname $SCRIPT)
 
 PYTHON_SCRIPT="${PASTA_SCRIPT}/vivareal_raspa_processa.py"
+[[ ! -f $PYTHON_SCRIPT ]] && exit 1
+
 DESTINO_ARQUIVO_SAIDA="${PASTA_SCRIPT}/imoveis_api/dados_raspados/."
+[[ ! -d $DESTINO_ARQUIVO_SAIDA ]] && exit 1
 
 GECKO_LOG="${PASTA_SCRIPT}/geckodriver.log"
 
 UNIX_TIME=$(date +"%s")
 PASTA_DADOS="${PASTA_SCRIPT}/dados/dados_${UNIX_TIME}"
 ARQUIVO_SAIDA="${PASTA_DADOS}/imoveis_processados_${UNIX_TIME}.jl"
-
 
 python3 $PYTHON_SCRIPT
 

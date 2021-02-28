@@ -12,8 +12,16 @@ regexps = {
 }
 regexp_endereco = re.compile(''.join(regexps.values()))
 
-
-campos_excluir = ['logradouro', 'numero']
+campos = [
+    'bairro',
+    'cidade',
+    'estado',
+    'area',
+    'quartos',
+    'banheiros',
+    'vagas',
+    'preco'
+]
 
 
 class ImovelDict():
@@ -52,7 +60,6 @@ class ImovelDict():
 
 
     def eh_valido(self):
-        campos = [k for k in self.dict_novo if k not in campos_excluir]
         valido = True
 
         for campo in campos:

@@ -1,4 +1,5 @@
 *.json
 *.sqlite3
 __pycache__/
+auth.sh
 geckodriver
